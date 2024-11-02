@@ -1,0 +1,39 @@
+# Ignora todos los archivos y carpetas que comiencen con .
+.*
+!/.well-known  # Excepto carpetas necesarias (por ejemplo, .well-known)
+
+# Archivos temporales y de compilación
+bin/
+obj/
+*.ncache
+
+# Archivos de configuración de usuario de Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos de configuración de Visual Studio Code
+.vscode/
+
+# Paquetes NuGet y dependencias temporales
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Archivos de publicación y despliegue de Azure
+local.settings.json  # Evita subir configuraciones locales de Azure Functions
+*.publish.xml
+*.PublishSettings
+
+# Archivos generados por herramientas de análisis
+TestResult/
+*.trx
+*.coverage
+coverage/
+
+# Archivos de configuración de sistema operativo
+.DS_Store
+Thumbs.db
