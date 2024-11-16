@@ -1,0 +1,68 @@
+# .github/workflows/ci.yml
+name: CI/CD para Foobar Blazor
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-dev:
+    # Ejecuta solo en la rama 'dev'
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restaurar dependencias
+        run: dotnet restore
+
+      - name: Compilar la aplicación (dev)
+        run: dotnet build --configuration Debug --no-restore
+
+      - name: Ejecutar pruebas
+        run: dotnet test --no-build --verbosity normal
+
+  build-main:
+    # Ejecuta solo en la rama 'main'
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restaurar dependencias
+        run: dotnet restore
+
+      - name: Compilar la aplicación (main)
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Ejecutar pruebas
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Publicar aplicación
+        run: dotnet publish -c Release -o ./publish
+
+      # Ejemplo de despliegue en GitHub Pages o puedes ajustar según tu destino
+      - name: Desplegar a GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish/wwwroot
