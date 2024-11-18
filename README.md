@@ -1,2 +1,2 @@
 # AzureFunctionsFoobar
-proyecto para practicar azure functions
+Blazor Project to practice CI/CD
