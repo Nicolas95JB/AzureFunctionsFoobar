@@ -58,11 +58,9 @@ jobs:
 
       - name: Publicar aplicación
         run: dotnet publish -c Release -o ./publish
-
-      # Ejemplo de despliegue en GitHub Pages o puedes ajustar según tu destino
-      - name: Desplegar a GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/main'
+        
+      - name: Subir artefactos
+        uses: actions/upload-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./publish/wwwroot
+          name: dotnet-artifact
+          path: ./publish 
